@@ -2,14 +2,14 @@
   "name": "diff-cam-feed",
   "version": "1.0.0",
   "private": true,
-  "description": "Web app that uses motion detection to take a snapshot when something moves, then uploads the image to Twitter.",
+  "description": "Web app that uses motion detection to send notification/photos to telegram",
   "main": "dist/server/app.js",
   "scripts": {
     "start": "node dist/server/app.js",
     "postinstall": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Will Boyd",
+  "author": "Ido",
   "license": "MIT",
   "engines": {
     "node": "6.11.1"

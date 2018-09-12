@@ -13,5 +13,5 @@ var app = express();
 var router = require('./router')(app);
 
 var server = app.listen(process.env.PORT, function () {
-	console.log('Listening...');
+	console.log('Listening... on ' + process.env.PORT);
 });
