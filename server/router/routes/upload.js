@@ -1,42 +1,49 @@
-var express = require('express');
-var twitter = require('twitter');
+const TelegramBot = require('node-telegram-bot-api');
+let express = require('express');
+let fs = require('fs');
 
-var router = express.Router();
+// replace the value below with the Telegram token you receive from @BotFather
 
-router.post('/', function(req, res) {
-	var client = new twitter({
-		consumer_key: process.env.TWITTER_CONSUMER_KEY,
-		consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-		access_token_key: req.user.tokenKey,
-		access_token_secret: req.user.tokenSecret
-	});
+
+// Create a bot that uses 'polling' to fetch new updates
+const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, {
+	polling: true
+});
+
+bot.sendMessage(process.env.CHAT_ID, 'Up and running 🏄🏼‍♂️');
+
+// TODO: choose one or more
+//let GPhotos = require('upload-gphotos');
+//let twitter = require('twitter');
+
+let router = express.Router();
+
+//
+// function to create file from base64 encoded string
+function base64_decode(base64str, file) {
+	// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+	var bitmap = new Buffer(base64str, 'base64');
+	// write buffer to file
+	fs.writeFileSync(file, bitmap);
+	console.log('******** File created from base64 encoded string ********');
+}
+
+//
+//
+//
+router.post('/', function (req, res) {
+
+	console.log("TODO: Got req:" + req);
 
 	if (req.body.isTestMode === 'true') {
 		console.log('Success (test mode)');
 		res.status(200).send();
 	} else {
-		var mediaUpload = {
-			media_data: req.body.dataURL
-		};
-		client.post('media/upload', mediaUpload, function(error, media, response) {
-			if (error) {
-				console.log('Error uploading media:', error);
-			} else {
-				var statusUpdate = {
-					status: 'Motion score: ' + req.body.score + ' #diffcam',
-					media_ids: media.media_id_string
-				};
-				client.post('statuses/update', statusUpdate, function(error, tweet, response) {
-					if (error) {
-						console.log('Error updating status:', error);
-						res.status(500).send({ error: error });
-					} else {
-						console.log('Status update successful');
-						res.status(200).send();
-					}
-				});
-			}
-		});
+		console.log("** dataURI: " + req.body.dataURL.substring(0, 200));
+		bot.sendMessage(process.env.CHAT_ID, 'Got some movment 💡');
+		let base64Image = req.body.dataURL;
+		base64_decode(base64Image, 'temp-image.png');
+		bot.sendPhoto(process.env.CHAT_ID, 'temp-image.png');
 	}
 });
 

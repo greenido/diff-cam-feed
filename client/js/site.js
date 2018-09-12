@@ -1,13 +1,13 @@
-$(function() {
+$(function () {
 	var isTestMode = false;
-	var considerTime = 4000;		// time window to consider best capture, in ms
-	var chillTime = 12000;			// time to chill after committing, in ms
-	var historyMax = 3;				// max number of past captures to show on page
+	var considerTime = 2000; // time window to consider best capture, in ms
+	var chillTime = 10000; // time to chill after committing, in ms
+	var historyMax = 5; // max number of past captures to show on page
 
 	var stopConsideringTimeout;
 	var stopChillingTimeout;
-	var status;						// disabled, watching, considering, chilling
-	var bestCapture;				// most significant capture while considering
+	var status; // disabled, watching, considering, chilling
+	var bestCapture; // most significant capture while considering
 
 	var $toggle = $('.toggle');
 	var $tweaks = $('.tweaks');
