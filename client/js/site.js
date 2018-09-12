@@ -31,7 +31,7 @@ $(function () {
 	//
 	//
 	function init() {
-		// don't want console logs from adapter.js
+		// Don't want console logs from adapter.js
 		adapter.disableLog(true);
 
 		setStatus('disabled');
