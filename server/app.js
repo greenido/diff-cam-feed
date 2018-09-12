@@ -5,9 +5,9 @@
  */
 var express = require('express');
 
-console.log("(!) We are on " + process.env.ENVIRONMENT + " Env.");
 try {
 	require('../../.shhh');
+	console.log("(!) We are on " + process.env.ENVIRONMENT + " Env.");
 } catch (e) {
 	throw 'Environment variables not found! Well, check why...';
 }
