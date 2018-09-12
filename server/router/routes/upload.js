@@ -1,25 +1,61 @@
+/**
+ * @Author: Ido
+ * @Date: Sep 2018
+ * @see https://core.telegram.org/bots/api/#message
+ * 		https://github.com/yagop/node-telegram-bot-api/
+ * 
+ */
 const TelegramBot = require('node-telegram-bot-api');
 let express = require('express');
 let fs = require('fs');
-
-// replace the value below with the Telegram token you receive from @BotFather
 
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, {
 	polling: true
 });
+//bot.sendMessage(process.env.CHAT_ID, 'Up and running 🏄🏼‍♂️');
 
-bot.sendMessage(process.env.CHAT_ID, 'Up and running 🏄🏼‍♂️');
+bot.onText(/\/start/, (msg) => {
+	bot.sendMessage(msg.chat.id, "Starting the monitoring");
+	fs.writeFileSync("status.txt", "Go");
+});
 
-// TODO: choose one or more
-//let GPhotos = require('upload-gphotos');
-//let twitter = require('twitter');
+bot.onText(/\/stop/, (msg) => {
+	bot.sendMessage(msg.chat.id, "Stoping the monitoring");
+	fs.writeFileSync("status.txt", "Stop");
+});
+
+//
+//
+bot.on('message', (msg) => {
+	var helpMsg = "help";
+	if (msg.text.toString().toLowerCase().indexOf(helpMsg) === 0) {
+		bot.sendMessage(msg.chat.id, "Hey - Here are the options", {
+			"reply_markup": {
+				"keyboard": [
+					["/start", "/stop"],
+					["status"],
+					["help"]
+				]
+			}
+		});
+	}
+
+	if (msg.text.toString().toLowerCase().includes("status")) {
+		bot.sendMessage(msg.chat.id, 'Up and running 🏄🏼‍♂️');
+	}
+	var bye = "bye";
+	if (msg.text.toString().toLowerCase().includes(bye)) {
+		bot.sendMessage(msg.chat.id, "Bye bye");
+	}
+});
 
 let router = express.Router();
 
 //
-// function to create file from base64 encoded string
+// Util function to create file from base64 encoded string
+//
 function base64_decode(base64str, file) {
 	// create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
 	var bitmap = new Buffer(base64str, 'base64');
@@ -32,14 +68,11 @@ function base64_decode(base64str, file) {
 //
 //
 router.post('/', function (req, res) {
-
-	console.log("TODO: Got req:" + req);
-
 	if (req.body.isTestMode === 'true') {
 		console.log('Success (test mode)');
 		res.status(200).send();
 	} else {
-		console.log("** dataURI: " + req.body.dataURL.substring(0, 200));
+		console.log("** Got a new dataURI: " + req.body.dataURL.substring(0, 50));
 		bot.sendMessage(process.env.CHAT_ID, 'Got some movment 💡');
 		let base64Image = req.body.dataURL;
 		base64_decode(base64Image, 'temp-image.png');

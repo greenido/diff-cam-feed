@@ -41,6 +41,23 @@ $(function () {
 			startCompleteCallback: startStreaming,
 			captureCallback: checkCapture
 		});
+
+		setInterval(function () {
+			$.get("/status", function (data) {
+				console.log("status check. Got: " + data);
+				if (data === "Go") {
+					if (status === 'disabled') {
+						console.log("Got go command and start the party");
+						DiffCamEngine.start();
+						startStreaming();
+					}
+				} else {
+					console.log("Got Stop command and stopping for now");
+					stopStreaming();
+				}
+			});
+		}, 10000);
+
 	}
 
 	function initSuccess() {

@@ -16,14 +16,15 @@ module.exports = function (app) {
 		saveUninitialized: true
 	}));
 	app.use(bodyParser.json({
-		limit: '2mb'
+		limit: '4mb'
 	}));
 	app.use(bodyParser.urlencoded({
 		extended: false,
-		limit: '2mb'
+		limit: '4mb'
 	}));
 
 	app.use('/', require('./routes/home'));
 	app.use('/upload', require('./routes/upload'));
+	app.use('/status', require('./routes/status'));
 	app.use(express.static('./dist/client'));
 };
