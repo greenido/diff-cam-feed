@@ -1,10 +1,8 @@
 # diff-cam-feed
 
-Web app that uses motion detection to take a snapshot when something moves, then uploads the image to Twitter and/or send you an alert (sms, email).
+🐒 A Web app that uses motion detection to take a snapshot when something moves, then send the images to your telegram bot.
 
-### Demo
-
-TODO
+![](https://greenido.files.wordpress.com/2018/08/img_7763-effects.jpg?w=696)
 
 ### Notes
 
@@ -16,16 +14,10 @@ TODO
 
 ```javascript
 process.env.ENVIRONMENT = "dev";
-process.env.PORT = 3000; // do not set in prod (auto-assigned by Heroku)
+process.env.PORT = 8080;
 process.env.SESSION_SECRET = "your secret string";
-process.env.TWITTER_CONSUMER_KEY = "your twitter consumer key";
-process.env.TWITTER_CONSUMER_SECRET = "your twitter consumer secret";
 ```
 
 ---
-
-If you wish to upload to twitter -> the app relies on a registered Twitter app. You can create one via [Twitter Application Management](https://apps.twitter.com/). The `TWITTER_CONSUMER_KEY` and `TWITTER_CONSUMER_SECRET` values above will be provided when you do so.
-
-Images are not necessarily uploaded to the account used for registering the Twitter app. Rather, users will be prompted to sign in with their own twitter account, which is where the images will be uploaded.
 
 ⚽️ This web app does require `https` to run in production. It will run fine under `http` on localhost, though.
