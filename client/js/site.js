@@ -1,3 +1,8 @@
+/**
+ * @Author: Ido
+ * @Date: Sep 2018
+ *
+ */
 $(function () {
 	var isTestMode = false;
 	var considerTime = 2000; // time window to consider best capture, in ms
