@@ -6,7 +6,7 @@
 
 ### Notes
 
-- you can read more about a similar project I did with [Rasberry Pi](https://greenido.wordpress.com/2018/10/09/raspberry-pi-as-security-camera-with-motion-detection/)
+- you can read more about a similar project I did with [Raspberry Pi](https://greenido.wordpress.com/2018/10/09/raspberry-pi-as-security-camera-with-motion-detection/)
 
 - To run: `npm install`, then `gulp` (or `gulp watch`), then `npm start`. Everything is built to `/dist`. If you're in dev, hit `http://localhost:3000` to run the web app.
 
